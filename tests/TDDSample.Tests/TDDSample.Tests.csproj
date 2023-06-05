@@ -6,13 +6,27 @@
         </None>
     </ItemGroup>
 
-    <!--  We should add this reference in each test project-->
     <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk"/>
-        <PackageReference Include="xunit"/>
-        <!-- https://xunit.net/docs/nuget-packages#xunit.runner.visualstudio-->
-        <PackageReference Include="xunit.runner.visualstudio"/>
-        <PackageReference Include="Microsoft.VisualStudio.TestPlatform"/>
+      <PackageReference Include="AutoBogus" />
+      <PackageReference Include="FluentAssertions" />
+      <PackageReference Include="FluentAssertions.Web" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" />
+      <PackageReference Include="Microsoft.VisualStudio.TestPlatform" />
+      <PackageReference Include="NSubstitute" />
+      <PackageReference Include="xunit" />
+      <PackageReference Include="xunit.runner.visualstudio">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\TDDSample\TDDSample.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="UnitTests\TodoItems\" />
+      <Folder Include="UnitTests\Users\" />
     </ItemGroup>
 
 </Project>

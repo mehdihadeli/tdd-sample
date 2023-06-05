@@ -1,3 +1,39 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="Ardalis.Result" />
+      <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" />
+      <PackageReference Include="Asp.Versioning.Http" />
+      <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" />
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+      <PackageReference Include="Mediator" />
+      <PackageReference Include="MediatR" />
+      <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+      <PackageReference Include="Scrutor" />
+    </ItemGroup>
 
+    <ItemGroup>
+        <!--https://github.com/dotnet/aspnetcore/issues/19481-->
+        <!--https://docs.microsoft.com/en-us/aspnet/core/fundamentals/metapackage-app-->
+        <!--https://docs.microsoft.com/en-us/aspnet/core/fundamentals/target-aspnetcore-->
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="TDDSample.Tests" />
+    </ItemGroup>
+    
 </Project>
