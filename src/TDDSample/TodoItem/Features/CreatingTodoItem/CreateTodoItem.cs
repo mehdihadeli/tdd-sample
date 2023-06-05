@@ -27,7 +27,7 @@ public class CreateTodoItemHandler : IRequestHandler<CreateTodoItem, Result<int>
             {
                 new() { Identifier = nameof(request), ErrorMessage = $"{nameof(request)} is required." }
             };
-            return Result<int>.Invalid(errors);
+            return Result.Invalid(errors);
         }
 
         var todoItem = new Models.TodoItem
@@ -40,6 +40,6 @@ public class CreateTodoItemHandler : IRequestHandler<CreateTodoItem, Result<int>
 
         var res = await _todoItemRepository.AddAsync(todoItem, cancellationToken);
 
-        return Result<int>.Success(res.Id);
+        return Result.Success(res.Id);
     }
 }

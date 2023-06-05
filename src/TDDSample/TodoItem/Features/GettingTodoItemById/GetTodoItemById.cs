@@ -27,17 +27,17 @@ public class GetTodoItemByIdHandler : IRequestHandler<GetTodoItemById, Result<To
             {
                 new() { Identifier = nameof(request), ErrorMessage = $"{nameof(request)} is required." }
             };
-            return Result<TodoItemDto>.Invalid(errors);
+            return Result.Invalid(errors);
         }
 
         var todoItem = await _todoItemRepository.GetByIdAsync(request.Id, cancellationToken);
         if (todoItem is null)
         {
-            return Result<TodoItemDto>.NotFound();
+            return Result.NotFound();
         }
 
         var dto = _mapper.Map<TodoItemDto>(todoItem);
 
-        return Result<TodoItemDto>.Success(dto);
+        return Result.Success(dto);
     }
 }

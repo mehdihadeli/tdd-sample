@@ -27,15 +27,15 @@ internal class GetTodoItemsHandler : IRequestHandler<GetTodoItems, Result<PagedL
             {
                 new() { Identifier = nameof(request), ErrorMessage = $"{nameof(request)} is required." }
             };
-            return Result<PagedList<TodoItemDto>>.Invalid(errors);
+            return Result.Invalid(errors);
         }
 
-        var pageResult = await _todoItemRepository.GetByPageAsync(request.PageRequest);
+        var pageResult = await _todoItemRepository.GetByPageAsync(request.PageRequest, cancellationToken);
 
         var pageResultDto = pageResult.To<TodoItemDto>(
             ti => new TodoItemDto(ti.Id, ti.Title, ti.IsCompleted, ti.UserId, ti.CreatedOn)
         );
 
-        return Result<PagedList<TodoItemDto>>.Success(pageResultDto);
+        return Result.Success(pageResultDto);
     }
 }

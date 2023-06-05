@@ -11,13 +11,13 @@ namespace TDDSample.Users.GetUsers;
 
 internal static class GetUsersEndpoint
 {
-    internal static RouteHandlerBuilder MapGetUsersEndpoint(IEndpointRouteBuilder routeBuilder)
+    internal static RouteHandlerBuilder MapGetUsersEndpoint(this IEndpointRouteBuilder routeBuilder)
     {
         return routeBuilder.MapGet("/", Handle).WithName("Users");
     }
 
-    internal async static Task<Results<Ok<PagedList<UserDto>>, ValidationProblem>> Handle(
-        GetUsersRequestParameters requestParameters
+    internal static async Task<Results<Ok<PagedList<UserDto>>, ValidationProblem, ProblemHttpResult>> Handle(
+        [AsParameters] GetUsersRequestParameters requestParameters
     )
     {
         var (mediator, cancellationToken, page, pageSize) = requestParameters;
@@ -26,11 +26,17 @@ internal static class GetUsersEndpoint
 
         if (result.Status == ResultStatus.Invalid)
         {
-            var errors = new Dictionary<string, string[]>()
+            var errors = new Dictionary<string, string[]>
             {
                 { "validation error", result.ValidationErrors.Select(x => x.ErrorMessage).ToArray() }
             };
             return TypedResults.ValidationProblem(errors: errors);
+        }
+
+        if (result.Status == ResultStatus.Error)
+        {
+            var statusCode = int.Parse(result.CorrelationId);
+            return TypedResults.Problem(statusCode: statusCode, detail: result.Errors.FirstOrDefault());
         }
 
         return TypedResults.Ok(result.Value);

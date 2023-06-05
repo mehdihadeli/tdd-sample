@@ -23,6 +23,7 @@
     <PackageVersion Include="Microsoft.VisualStudio.TestPlatform" Version="14.0.0" />
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
     <PackageVersion Include="NSubstitute" Version="5.0.0" />
+    <PackageVersion Include="RichardSzalay.MockHttp" Version="6.0.0" />
     <PackageVersion Include="Scrutor" Version="4.2.2" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />

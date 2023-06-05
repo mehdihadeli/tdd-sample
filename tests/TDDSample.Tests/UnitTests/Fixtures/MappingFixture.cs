@@ -1,5 +1,6 @@
 using AutoMapper;
 using TDDSample.TodoItem;
+using TDDSample.Users;
 
 namespace TDDSample.Tests.UnitTests.Fixtures;
 
@@ -9,7 +10,8 @@ public class MappingFixture
     {
         var configurationProvider = new MapperConfiguration(cfg =>
         {
-            cfg.AddProfile<MappingProfile>();
+            cfg.AddProfile<TodoItemMappingProfile>();
+            cfg.AddProfile<UsersMappingProfile>();
         });
 
         var mapper = configurationProvider.CreateMapper();

@@ -3,9 +3,9 @@ using TDDSample.TodoItem.Dtos;
 
 namespace TDDSample.TodoItem;
 
-public class MappingProfile : Profile
+public class TodoItemMappingProfile : Profile
 {
-    public MappingProfile()
+    public TodoItemMappingProfile()
     {
         CreateMap<Models.TodoItem, TodoItemDto>();
     }

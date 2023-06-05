@@ -4,9 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using TDDSample.Shared.Data;
 using TDDSample.Shared.Data.Repository;
 
-namespace TDDSample.Shared.Extensions;
+namespace TDDSample.Shared.Extensions.ServiceCollectionsExtensions;
 
-public static class Extensions
+public static partial class ServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
@@ -19,6 +19,8 @@ public static class Extensions
 
         services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
         services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
+
+        services.AddUsersHttpClient();
 
         return services;
     }
