@@ -1,9 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
     <ItemGroup>
         <None Update="xunit.runner.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\TDDSample.Api\TDDSample.Api.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -20,13 +30,5 @@
       </PackageReference>
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\src\TDDSample\TDDSample.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="UnitTests\TodoItems\" />
-      <Folder Include="UnitTests\Users\" />
-    </ItemGroup>
 
 </Project>
