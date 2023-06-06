@@ -36,4 +36,4 @@ The application is in development status. You are feel free to submit pull reque
 
 ## License
 
-The project is under [MIT license](https://github.com/mehdihadeli/tdd0sample/blob/master/LICENSE).
+The project is under [MIT license](https://github.com/mehdihadeli/tdd-sample/blob/master/LICENSE).
