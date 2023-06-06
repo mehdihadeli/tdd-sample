@@ -77,6 +77,7 @@ public class GetUsersHandlerTests : IClassFixture<MappingFixture>
         var result = await handler.Handle(query, cancellationToken);
 
         result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeOfType<PagedList<UserDto>>();
         var pageListDto = result.Value.As<PagedList<UserDto>>();
         pageListDto.Should().NotBeNull();
         pageListDto.PageNumber.Should().Be(page);

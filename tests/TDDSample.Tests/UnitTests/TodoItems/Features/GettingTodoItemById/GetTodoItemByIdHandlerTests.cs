@@ -98,9 +98,7 @@ public class GetTodoItemByIdHandlerTests : IClassFixture<MappingFixture>
 
         var request = new GetTodoItemById(todoItemId);
 
-        todoItemRepository
-            .GetByIdAsync<int>(Arg.Is(todoItemId), cancellationToken)
-            .Returns((TodoItem.Models.TodoItem)null);
+        todoItemRepository.GetByIdAsync(Arg.Is(todoItemId), cancellationToken).Returns((TodoItem.Models.TodoItem)null);
 
         // Act
         var result = await handler.Handle(request, cancellationToken);
