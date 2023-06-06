@@ -1,6 +1,6 @@
 # TDDSample
 
-This repository contains a sample project demonstrating `Test-Driven Development (TDD)` using .Net 7 and Vertical Slice architecture based on Minimal APIs in .NET Core. The project aims to showcase best practices for building maintainable and testable software.
+This repository contains a sample project demonstrating `Test-Driven Development (TDD)` using .Net 7 and `Vertical Slice Architecture` based on `Minimal APIs` in .NET Core. The project aims to showcase best practices for building maintainable and testable software.
 
 Beside of creating some unit tests for achieving test driven development (TDD), we also covered integration and end-to-end testing here.
 
