@@ -42,6 +42,64 @@ public class GetTodoItemByIdEndpointTests
     }
 
     [Fact]
+    public async Task handle_should_returns_notfound_status_code_when_item_not_exists()
+    {
+        var mediatr = Substitute.For<IMediator>();
+        var todoItemId = 1;
+
+        var todoItemResult = Result.NotFound();
+
+        mediatr
+            .Send(Arg.Is<GetTodoItemById>(query => query.Id == todoItemId), Arg.Any<CancellationToken>())
+            .Returns(todoItemResult);
+
+        var requestParameters = new GetTodoItemByIdEndpoint.GetTodoItemByIdRequestParameters(
+            todoItemId,
+            mediatr,
+            CancellationToken.None
+        );
+
+        var result = (await GetTodoItemByIdEndpoint.Handle(requestParameters)).Result;
+
+        result.Should().BeOfType<ProblemHttpResult>();
+        var problemHttpResult = result.As<ProblemHttpResult>();
+        problemHttpResult.Should().NotBeNull();
+
+        problemHttpResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
+    }
+
+    [Fact]
+    public async Task handle_should_returns_bad_request_status_code_when_there_is_invalid_input()
+    {
+        var mediatr = Substitute.For<IMediator>();
+        var todoItemId = 1;
+
+        var errors = new List<ValidationError>
+        {
+            new() { Identifier = "validation error", ErrorMessage = "error message" }
+        };
+        var todoItemResult = Result.Invalid(errors);
+
+        mediatr
+            .Send(Arg.Is<GetTodoItemById>(query => query.Id == todoItemId), Arg.Any<CancellationToken>())
+            .Returns(todoItemResult);
+
+        var requestParameters = new GetTodoItemByIdEndpoint.GetTodoItemByIdRequestParameters(
+            todoItemId,
+            mediatr,
+            CancellationToken.None
+        );
+
+        var result = (await GetTodoItemByIdEndpoint.Handle(requestParameters)).Result;
+
+        result.Should().BeOfType<ValidationProblem>();
+        var validationProblem = result.As<ValidationProblem>();
+        validationProblem.Should().NotBeNull();
+
+        validationProblem.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
+    }
+
+    [Fact]
     public async Task handle_should_returns_correct_todo_item()
     {
         var mediatr = Substitute.For<IMediator>();

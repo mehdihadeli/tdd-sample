@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TDDSample.TodoItem.Features.CreatingTodoItem;
 using TDDSample.TodoItem.Features.GettingTodoItemById;
 using TDDSample.TodoItem.Features.GettingTodoItems;
+using TDDSample.TodoItem.Features.UpdatingTodoItem;
 
 namespace TDDSample.TodoItem;
 
@@ -38,6 +39,7 @@ public static class Config
         todoItemsV1.MapCreateTodoItemEndpoint();
         todoItemsV1.MapGetTodoItemByIdEndpoint();
         todoItemsV1.MapGetTodoItemsEndpoint();
+        todoItemsV1.MapUpdateTodoItemEndpoint();
 
         return routeBuilder;
     }

@@ -40,14 +40,20 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="IntegrationTests\" />
+    </ItemGroup>
+
+<!--    https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/MSBuildIntegration.md#coverage-output-->
+    
     <PropertyGroup>
         <CollectCoverage>true</CollectCoverage>
         <CoverletOutputFormat>lcov</CoverletOutputFormat>
         <CoverletOutput>./test-results/lcov.info</CoverletOutput>
     </PropertyGroup>
 
-<Target Name="GenerateHtmlCoverageReport" AfterTargets="GenerateCoverageResultAfterTest">
-  <ReportGenerator ReportFiles="@(CoverletReport)" TargetDirectory="./html-coverage-report/" />
-</Target>
+    <Target Name="GenerateHtmlCoverageReport" AfterTargets="GenerateCoverageResultAfterTest">
+        <ReportGenerator ReportFiles="@(CoverletReport)" TargetDirectory="./html-coverage-report/" />
+    </Target>
 
 </Project>

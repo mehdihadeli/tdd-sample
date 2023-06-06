@@ -1,7 +1,6 @@
 using Ardalis.Result;
 using MediatR;
 using TDDSample.Shared.Data.Repository;
-using TDDSample.TodoItem.Dtos;
 
 namespace TDDSample.TodoItem.Features.CreatingTodoItem;
 
