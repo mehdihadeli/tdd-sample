@@ -1,14 +1,15 @@
-using Ardalis.Result;
 using AutoMapper;
 using MediatR;
+using OneOf;
 using TDDSample.Shared.Data.Repository;
+using TDDSample.Shared.Exceptions;
 using TDDSample.TodoItem.Dtos;
 
 namespace TDDSample.TodoItem.Features.GettingTodoItemById;
 
-public record GetTodoItemById(int Id) : IRequest<Result<TodoItemDto>>;
+public record GetTodoItemById(int Id) : IRequest<OneOf<TodoItemDto, BadRequestException,NotFoundException>>;
 
-public class GetTodoItemByIdHandler : IRequestHandler<GetTodoItemById, Result<TodoItemDto>>
+public class GetTodoItemByIdHandler : IRequestHandler<GetTodoItemById, OneOf<TodoItemDto, BadRequestException,NotFoundException>>
 {
     private readonly IRepository<Models.TodoItem> _todoItemRepository;
     private readonly IMapper _mapper;
@@ -19,25 +20,19 @@ public class GetTodoItemByIdHandler : IRequestHandler<GetTodoItemById, Result<To
         _mapper = mapper;
     }
 
-    public async Task<Result<TodoItemDto>> Handle(GetTodoItemById? request, CancellationToken cancellationToken)
+    public async Task<OneOf<TodoItemDto, BadRequestException,NotFoundException>> Handle(GetTodoItemById? request, CancellationToken cancellationToken)
     {
         if (request is null)
-        {
-            var errors = new List<ValidationError>
-            {
-                new() { Identifier = nameof(request), ErrorMessage = $"{nameof(request)} is required." }
-            };
-            return Result.Invalid(errors);
-        }
+            return new BadRequestException($"{nameof(request)} is required.");
 
         var todoItem = await _todoItemRepository.GetByIdAsync(request.Id, cancellationToken);
         if (todoItem is null)
         {
-            return Result.NotFound();
+            return new NotFoundException($"Todo item with id {request.Id} not found");
         }
 
         var dto = _mapper.Map<TodoItemDto>(todoItem);
 
-        return Result.Success(dto);
+        return dto;
     }
 }

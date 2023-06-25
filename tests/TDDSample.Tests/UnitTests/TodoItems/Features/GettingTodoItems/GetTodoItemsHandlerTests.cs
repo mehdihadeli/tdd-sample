@@ -46,10 +46,8 @@ public class GetTodoItemsHandlerTests : IClassFixture<MappingFixture>
         var result = await handler.Handle(request, cancellationToken);
 
         // Assert
-        result.Should().NotBeNull();
-        result.IsSuccess.Should().BeTrue();
-        result.Value.Should().BeOfType<PagedList<TodoItemDto>>();
         var pageListDto = result.Value.As<PagedList<TodoItemDto>>();
+        pageListDto.Should().NotBeNull();
         pageListDto.Should().BeEquivalentTo(pageList, c => c.ExcludingMissingMembers());
     }
 

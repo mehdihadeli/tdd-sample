@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using TDDSample.Api;
 using TDDSample.Shared.Data;
+using TDDSample.TodoItem.Dtos;
 using TDDSample.TodoItem.Features.GettingTodoItemById;
 using Xunit;
 
@@ -33,8 +34,7 @@ public class GetTodoItemByIdTests : IClassFixture<WebApplicationFactory<ApiMetad
 
         var query = new GetTodoItemById(todoItem.Id);
         var result = await _mediator.Send(query);
-        result.IsSuccess.Should().BeTrue();
-
-        result.Value.Should().BeEquivalentTo(todoItem);
+        result.As<TodoItemDto>().Should().NotBeNull();
+        result.As<TodoItemDto>().Should().BeEquivalentTo(todoItem);
     }
 }

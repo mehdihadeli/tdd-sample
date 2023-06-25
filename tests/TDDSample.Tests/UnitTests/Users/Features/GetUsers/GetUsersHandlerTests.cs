@@ -1,6 +1,6 @@
-using Ardalis.Result;
 using AutoBogus;
 using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using TDDSample.Shared.Clients;
@@ -76,9 +76,8 @@ public class GetUsersHandlerTests : IClassFixture<MappingFixture>
         var query = new TDDSample.Users.GetUsers.GetUsers(new PageRequest(page, pageSize));
         var result = await handler.Handle(query, cancellationToken);
 
-        result.IsSuccess.Should().BeTrue();
-        result.Value.Should().BeOfType<PagedList<UserDto>>();
         var pageListDto = result.Value.As<PagedList<UserDto>>();
+        pageListDto.Should().NotBeNull();
         pageListDto.Should().NotBeNull();
         pageListDto.PageNumber.Should().Be(page);
         pageListDto.PageSize.Should().Be(pageSize);
@@ -103,10 +102,9 @@ public class GetUsersHandlerTests : IClassFixture<MappingFixture>
         var query = new TDDSample.Users.GetUsers.GetUsers(new PageRequest(page, pageSize));
         var result = await handler.Handle(query, cancellationToken);
 
-        result.IsSuccess.Should().BeFalse();
-        result.Status.Should().Be(ResultStatus.Error);
-        result.CorrelationId.Should().Be("404");
-        result.Errors.First().Should().Be("Not Found");
+        var responseException = result.Value.As<HttpResponseException>();
+        responseException.Should().NotBeNull();
+        responseException.StatusCode.Should().Be(StatusCodes.Status404NotFound);
     }
 
     [Fact]
@@ -126,9 +124,8 @@ public class GetUsersHandlerTests : IClassFixture<MappingFixture>
         var query = new TDDSample.Users.GetUsers.GetUsers(new PageRequest(page, pageSize));
         var result = await handler.Handle(query, cancellationToken);
 
-        result.IsSuccess.Should().BeFalse();
-        result.Status.Should().Be(ResultStatus.Error);
-        result.CorrelationId.Should().Be("500");
-        result.Errors.First().Should().Be("Internal server error");
+        result.Value.As<InternalServerException>().Should().NotBeNull();
+        var internalServerException = result.Value.As<InternalServerException>();
+        internalServerException.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
     }
 }

@@ -1,10 +1,10 @@
-using Ardalis.Result;
 using AutoBogus;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using NSubstitute;
+using TDDSample.Shared.Exceptions;
 using TDDSample.TodoItem.Dtos;
 using TDDSample.TodoItem.Features.GettingTodoItemById;
 using Xunit;
@@ -20,11 +20,10 @@ public class GetTodoItemByIdEndpointTests
         var todoItemId = 1;
 
         var todoItemDto = new AutoFaker<TodoItemDto>().RuleFor(x => x.Id, todoItemId).Generate();
-        var todoItemResult = Result<TodoItemDto>.Success(todoItemDto);
 
         mediatr
             .Send(Arg.Is<GetTodoItemById>(query => query.Id == todoItemId), Arg.Any<CancellationToken>())
-            .Returns(todoItemResult);
+            .Returns(todoItemDto);
 
         var requestParameters = new GetTodoItemByIdEndpoint.GetTodoItemByIdRequestParameters(
             todoItemId,
@@ -47,11 +46,9 @@ public class GetTodoItemByIdEndpointTests
         var mediatr = Substitute.For<IMediator>();
         var todoItemId = 1;
 
-        var todoItemResult = Result.NotFound();
-
         mediatr
             .Send(Arg.Is<GetTodoItemById>(query => query.Id == todoItemId), Arg.Any<CancellationToken>())
-            .Returns(todoItemResult);
+            .Returns(new NotFoundException(""));
 
         var requestParameters = new GetTodoItemByIdEndpoint.GetTodoItemByIdRequestParameters(
             todoItemId,
@@ -74,15 +71,9 @@ public class GetTodoItemByIdEndpointTests
         var mediatr = Substitute.For<IMediator>();
         var todoItemId = 1;
 
-        var errors = new List<ValidationError>
-        {
-            new() { Identifier = "validation error", ErrorMessage = "error message" }
-        };
-        var todoItemResult = Result.Invalid(errors);
-
         mediatr
             .Send(Arg.Is<GetTodoItemById>(query => query.Id == todoItemId), Arg.Any<CancellationToken>())
-            .Returns(todoItemResult);
+            .Returns(new BadRequestException("error message"));
 
         var requestParameters = new GetTodoItemByIdEndpoint.GetTodoItemByIdRequestParameters(
             todoItemId,
@@ -106,11 +97,10 @@ public class GetTodoItemByIdEndpointTests
         var todoItemId = 1;
 
         var todoItemDto = new AutoFaker<TodoItemDto>().RuleFor(x => x.Id, todoItemId).Generate();
-        var todoItemResult = Result<TodoItemDto>.Success(todoItemDto);
 
         mediatr
             .Send(Arg.Is<GetTodoItemById>(query => query.Id == todoItemId), Arg.Any<CancellationToken>())
-            .Returns(todoItemResult);
+            .Returns(todoItemDto);
 
         var requestParameters = new GetTodoItemByIdEndpoint.GetTodoItemByIdRequestParameters(
             todoItemId,
@@ -133,11 +123,10 @@ public class GetTodoItemByIdEndpointTests
         var todoItemId = 1;
 
         var todoItemDto = new AutoFaker<TodoItemDto>().RuleFor(x => x.Id, todoItemId).Generate();
-        var todoItemResult = Result<TodoItemDto>.Success(todoItemDto);
 
         mediatr
             .Send(Arg.Is<GetTodoItemById>(query => query.Id == todoItemId), Arg.Any<CancellationToken>())
-            .Returns(todoItemResult);
+            .Returns(todoItemDto);
 
         var requestParameters = new GetTodoItemByIdEndpoint.GetTodoItemByIdRequestParameters(
             todoItemId,

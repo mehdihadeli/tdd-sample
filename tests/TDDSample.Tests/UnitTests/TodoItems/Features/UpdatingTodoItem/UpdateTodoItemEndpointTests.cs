@@ -1,10 +1,11 @@
-using Ardalis.Result;
 using AutoBogus;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using NSubstitute;
+using OneOf.Types;
+using TDDSample.Shared.Exceptions;
 using TDDSample.TodoItem.Features.UpdatingTodoItem;
 using Xunit;
 
@@ -21,7 +22,6 @@ public class UpdateTodoItemEndpointTests
         var cancellationToken = CancellationToken.None;
         var todoItemId = 1;
 
-        var result = Result.Success();
         mediator
             .Send(
                 Arg.Is<UpdateTodoItem>(
@@ -30,7 +30,7 @@ public class UpdateTodoItemEndpointTests
                 ),
                 Arg.Any<CancellationToken>()
             )
-            .Returns(result);
+            .Returns(new None());
 
         var requestParameters = new UpdateTodoItemEndpoint.UpdateTodoItemRequestParameters(
             todoItemId,
@@ -56,7 +56,6 @@ public class UpdateTodoItemEndpointTests
         var cancellationToken = CancellationToken.None;
         var todoItemId = 1;
 
-        var result = Result.NotFound();
         mediator
             .Send(
                 Arg.Is<UpdateTodoItem>(
@@ -65,7 +64,7 @@ public class UpdateTodoItemEndpointTests
                 ),
                 Arg.Any<CancellationToken>()
             )
-            .Returns(result);
+            .Returns(new NotFoundException(""));
 
         var requestParameters = new UpdateTodoItemEndpoint.UpdateTodoItemRequestParameters(
             todoItemId,
@@ -92,7 +91,6 @@ public class UpdateTodoItemEndpointTests
         var cancellationToken = CancellationToken.None;
         var todoItemId = 1;
 
-        var result = Result.Success();
         mediator
             .Send(
                 Arg.Is<UpdateTodoItem>(
@@ -101,7 +99,7 @@ public class UpdateTodoItemEndpointTests
                 ),
                 Arg.Any<CancellationToken>()
             )
-            .Returns(result);
+            .Returns(new None());
 
         var requestParameters = new UpdateTodoItemEndpoint.UpdateTodoItemRequestParameters(
             todoItemId,

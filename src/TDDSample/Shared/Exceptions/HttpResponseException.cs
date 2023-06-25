@@ -3,25 +3,25 @@ namespace TDDSample.Shared.Exceptions;
 // https://stackoverflow.com/questions/21097730/usage-of-ensuresuccessstatuscode-and-handling-of-httprequestexception-it-throws
 public class HttpResponseException : CustomException
 {
-    public string? ResponseContent { get; }
+    public string? Messages { get; }
 
     public IReadOnlyDictionary<string, IEnumerable<string>>? Headers { get; }
 
     public HttpResponseException(
         int statusCode,
-        string responseContent,
+        string messages,
         IReadOnlyDictionary<string, IEnumerable<string>>? headers = null,
         Exception? innerException = null
     )
-        : base(responseContent, statusCode, innerException)
+        : base(messages, statusCode, innerException)
     {
         StatusCode = statusCode;
-        ResponseContent = responseContent;
+        Messages = messages;
         Headers = headers;
     }
 
     public override string ToString()
     {
-        return $"HTTP Response: \n\n{ResponseContent}\n\n{base.ToString()}";
+        return $"HTTP Response: \n\n{Messages}\n\n{base.ToString()}";
     }
 }

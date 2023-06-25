@@ -1,4 +1,3 @@
-using Ardalis.Result;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -24,16 +23,17 @@ public static class GetTodoItemsEndpoint
 
         var result = await mediator.Send(query, cancellationToken);
 
-        if (result.Status == ResultStatus.Invalid)
-        {
-            var errors = new Dictionary<string, string[]>
+       return result.Match<Results<Ok<PagedList<TodoItemDto>>, ValidationProblem>>(
+            todoItemList => TypedResults.Ok(todoItemList),
+            badRequestException =>
             {
-                { "validation errors", result.ValidationErrors.Select(x => x.ErrorMessage).ToArray() },
-            };
-            return TypedResults.ValidationProblem(errors: errors);
-        }
-        var dto = result.Value;
-        return TypedResults.Ok(dto);
+                var errors = new Dictionary<string, string[]>
+                             {
+                                 {"validation errors", badRequestException.ErrorMessages.ToArray()},
+                             };
+
+                return TypedResults.ValidationProblem(detail: badRequestException.Message, errors: errors);
+            });
     }
 
     internal record GetTodoItemsRequestParameter(

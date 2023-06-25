@@ -1,14 +1,12 @@
-using Ardalis.Result;
 using AutoBogus;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using NSubstitute;
+using TDDSample.Shared.Exceptions;
 using TDDSample.TodoItem.Dtos;
 using TDDSample.TodoItem.Features.GettingTodoItems;
-using TDDSample.Users.Dtos;
-using TDDSample.Users.GetUsers;
 using Xunit;
 
 namespace TDDSample.Tests.UnitTests.TodoItems.Features.GettingTodoItems;
@@ -29,14 +27,12 @@ public class GetTodoItemsEndpointTests
             pageSize
         );
         var todoItemsDto = new AutoFaker<TodoItemDto>().Generate(20);
-        var pageResult = Result.Success(
-            new PagedList<TodoItemDto>
-            {
-                PageSize = pageSize,
-                PageNumber = page,
-                Results = todoItemsDto
-            }
-        );
+        var pageResult = new PagedList<TodoItemDto>
+                         {
+                             PageSize = pageSize,
+                             PageNumber = page,
+                             Results = todoItemsDto
+                         };
 
         mediator
             .Send(
@@ -68,14 +64,13 @@ public class GetTodoItemsEndpointTests
             pageSize
         );
         var todoItemsDto = new AutoFaker<TodoItemDto>().Generate(20);
-        var pageResult = Result.Success(
+        var pageResult =
             new PagedList<TodoItemDto>
             {
                 PageSize = pageSize,
                 PageNumber = page,
                 Results = todoItemsDto
-            }
-        );
+            };
 
         mediator
             .Send(
@@ -108,14 +103,13 @@ public class GetTodoItemsEndpointTests
             pageSize
         );
         var todoItemsDto = new AutoFaker<TodoItemDto>().Generate(20);
-        var pageResult = Result.Success(
+        var pageResult =
             new PagedList<TodoItemDto>
             {
                 PageSize = pageSize,
                 PageNumber = page,
                 Results = todoItemsDto
-            }
-        );
+            };
 
         mediator
             .Send(
@@ -134,7 +128,7 @@ public class GetTodoItemsEndpointTests
         okResult.Value.PageSize.Should().Be(pageSize);
         okResult.Value.PageNumber.Should().Be(page);
         okResult.Value.Results.Should().HaveCountGreaterThan(0);
-        okResult.Value.Should().BeEquivalentTo(pageResult.Value);
+        okResult.Value.Should().BeEquivalentTo(pageResult);
     }
 
     [Fact]
@@ -152,12 +146,7 @@ public class GetTodoItemsEndpointTests
             pageSize
         );
 
-        var validationErrors = new List<ValidationError>
-                               { /* create test validation errors here */
-                               };
-        var invalidResult = Result<PagedList<TodoItemDto>>.Invalid(validationErrors);
-
-        mediator.Send(Arg.Any<GetTodoItems>(), cancellationToken).Returns(invalidResult);
+        mediator.Send(Arg.Any<GetTodoItems>(), cancellationToken).Returns(new BadRequestException(""));
 
         // Act
         var actualResult = (await GetTodoItemsEndpoint.Handle(requestParameters)).Result;

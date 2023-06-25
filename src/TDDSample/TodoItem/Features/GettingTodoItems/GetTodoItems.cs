@@ -1,13 +1,14 @@
-using Ardalis.Result;
 using MediatR;
+using OneOf;
 using TDDSample.Shared.Data.Repository;
+using TDDSample.Shared.Exceptions;
 using TDDSample.TodoItem.Dtos;
 
 namespace TDDSample.TodoItem.Features.GettingTodoItems;
 
-public record GetTodoItems(PageRequest PageRequest) : IRequest<Result<PagedList<TodoItemDto>>>;
+public record GetTodoItems(PageRequest PageRequest) : IRequest<OneOf<PagedList<TodoItemDto>, BadRequestException>>;
 
-internal class GetTodoItemsHandler : IRequestHandler<GetTodoItems, Result<PagedList<TodoItemDto>>>
+internal class GetTodoItemsHandler : IRequestHandler<GetTodoItems, OneOf<PagedList<TodoItemDto>, BadRequestException>>
 {
     private readonly IRepository<Models.TodoItem> _todoItemRepository;
 
@@ -16,26 +17,22 @@ internal class GetTodoItemsHandler : IRequestHandler<GetTodoItems, Result<PagedL
         _todoItemRepository = todoItemRepository;
     }
 
-    public async Task<Result<PagedList<TodoItemDto>>> Handle(
+    public async Task<OneOf<PagedList<TodoItemDto>, BadRequestException>> Handle(
         GetTodoItems? request,
         CancellationToken cancellationToken
     )
     {
         if (request is null)
         {
-            var errors = new List<ValidationError>
-            {
-                new() { Identifier = nameof(request), ErrorMessage = $"{nameof(request)} is required." }
-            };
-            return Result.Invalid(errors);
+            return new BadRequestException($"{nameof(request)} is required.");
         }
 
         var pageResult = await _todoItemRepository.GetByPageAsync(request.PageRequest, cancellationToken);
 
-        var pageResultDto = pageResult.To<TodoItemDto>(
+        var pageListDto = pageResult.To<TodoItemDto>(
             ti => new TodoItemDto(ti.Id, ti.Title, ti.IsCompleted, ti.UserId, ti.CreatedOn)
         );
 
-        return Result.Success(pageResultDto);
+        return pageListDto;
     }
 }

@@ -1,8 +1,8 @@
-using Ardalis.Result;
 using AutoBogus;
 using FluentAssertions;
 using NSubstitute;
 using TDDSample.Shared.Data.Repository;
+using TDDSample.Shared.Exceptions;
 using TDDSample.Tests.UnitTests.Fixtures;
 using TDDSample.TodoItem.Dtos;
 using TDDSample.TodoItem.Features.GettingTodoItemById;
@@ -38,10 +38,8 @@ public class GetTodoItemByIdHandlerTests : IClassFixture<MappingFixture>
         var result = await handler.Handle(request, cancellationToken);
 
         // Assert
-        result.Should().NotBeNull();
-        result.IsSuccess.Should().BeTrue();
-        result.Value.Should().BeOfType<TodoItemDto>();
         var todoItemDto = result.Value.As<TodoItemDto>();
+        todoItemDto.Should().NotBeNull();
         todoItemDto.Should().BeEquivalentTo(todoItem);
     }
 
@@ -81,10 +79,9 @@ public class GetTodoItemByIdHandlerTests : IClassFixture<MappingFixture>
         var result = await handler.Handle(request, cancellationToken);
 
         // Assert
-        result.Should().NotBeNull();
-        result.IsSuccess.Should().BeFalse();
-        result.ValidationErrors.Should().HaveCount(1);
-        result.ValidationErrors.First().Identifier.Should().Be(nameof(request));
+        var badRequestException = result.Value.As<BadRequestException>();
+        badRequestException.Should().NotBeNull();
+        badRequestException.Should().NotBeNull();
     }
 
     [Fact]
@@ -104,8 +101,7 @@ public class GetTodoItemByIdHandlerTests : IClassFixture<MappingFixture>
         var result = await handler.Handle(request, cancellationToken);
 
         // Assert
-        result.Should().NotBeNull();
-        result.IsSuccess.Should().BeFalse();
-        result.Status.Should().Be(ResultStatus.NotFound);
+        var notfoundException = result.Value.As<NotFoundException>();
+        notfoundException.Should().NotBeNull();
     }
 }

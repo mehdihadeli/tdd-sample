@@ -26,6 +26,7 @@
     <PackageVersion Include="Microsoft.VisualStudio.TestPlatform" Version="14.0.0" />
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
     <PackageVersion Include="NSubstitute" Version="5.0.0" />
+    <PackageVersion Include="OneOf" Version="3.0.255" />
     <PackageVersion Include="ReportGenerator" Version="5.1.21" />
     <PackageVersion Include="RichardSzalay.MockHttp" Version="6.0.0" />
     <PackageVersion Include="Scrutor" Version="4.2.2" />

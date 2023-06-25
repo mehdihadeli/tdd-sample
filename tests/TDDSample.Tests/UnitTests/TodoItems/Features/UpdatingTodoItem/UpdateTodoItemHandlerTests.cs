@@ -1,10 +1,9 @@
-using Ardalis.Result;
 using AutoBogus;
 using FluentAssertions;
 using NSubstitute;
+using OneOf.Types;
 using TDDSample.Shared.Data.Repository;
 using TDDSample.Tests.UnitTests.Fixtures;
-using TDDSample.TodoItem.Features.CreatingTodoItem;
 using TDDSample.TodoItem.Features.UpdatingTodoItem;
 using Xunit;
 
@@ -48,10 +47,10 @@ public class UpdateTodoItemHandlerTests : IClassFixture<MappingFixture>
             .Returns(Task.CompletedTask);
 
         // Act
-        var result = await handler.Handle(request, cancellationToken);
+       var result = await handler.Handle(request, cancellationToken);
 
         // Assert
-        result.IsSuccess.Should().BeTrue();
+        result.Value.As<None>().Should().NotBeNull();
         existingTodoItem.Id.Should().Be(request.Id);
         existingTodoItem.Title.Should().Be(request.Title);
         existingTodoItem.UserId.Should().Be(request.UserId);
@@ -89,7 +88,8 @@ public class UpdateTodoItemHandlerTests : IClassFixture<MappingFixture>
         var result = await handler.Handle(request, cancellationToken);
 
         // Assert
-        result.IsSuccess.Should().BeTrue();
+        result.Value.As<None>().Should().NotBeNull();
+
         await todoItemRepository
             .Received(1)
             .UpdateAsync(
@@ -136,7 +136,8 @@ public class UpdateTodoItemHandlerTests : IClassFixture<MappingFixture>
         var result = await handler.Handle(request, cancellationToken);
 
         // Assert
-        result.IsSuccess.Should().BeTrue();
+        result.Value.As<None>().Should().NotBeNull();
+
         await todoItemRepository.Received(1).GetByIdAsync(Arg.Is<int>(t => t == request.Id), cancellationToken);
     }
 }

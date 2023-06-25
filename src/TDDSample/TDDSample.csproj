@@ -6,7 +6,6 @@
     </PropertyGroup>
     
     <ItemGroup>
-      <PackageReference Include="Ardalis.Result" />
       <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" />
       <PackageReference Include="Asp.Versioning.Http" />
       <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" />
@@ -22,6 +21,7 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+      <PackageReference Include="OneOf" />
       <PackageReference Include="Scrutor" />
     </ItemGroup>
 
