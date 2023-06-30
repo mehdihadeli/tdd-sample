@@ -47,7 +47,7 @@ public class UserHttpClientTests : IClassFixture<MappingFixture>
 
         var usersClient = new AutoFaker<UserClientDto>().Generate(total);
 
-        var usersListPage = new UsersListPage
+        var usersListPage = new UsersListPageClientDto
         {
             Total = total,
             Limit = pageSize,
@@ -101,7 +101,7 @@ public class UserHttpClientTests : IClassFixture<MappingFixture>
 
         var usersClient = new AutoFaker<UserClientDto>().Generate(total);
 
-        var usersListPage = new UsersListPage
+        var usersListPage = new UsersListPageClientDto
         {
             Total = total,
             Limit = pageSize,

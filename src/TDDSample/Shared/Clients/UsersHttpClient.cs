@@ -40,7 +40,7 @@ public class UsersHttpClient : IUsersHttpClient
         // throw HttpResponseException instead of HttpRequestException (because we want detail response exception) with corresponding status code
         await httpResponse.EnsureSuccessStatusCodeWithDetailAsync();
 
-        var usersListPage = await httpResponse.Content.ReadFromJsonAsync<UsersListPage>(
+        var usersListPage = await httpResponse.Content.ReadFromJsonAsync<UsersListPageClientDto>(
             cancellationToken: cancellationToken
         );
 

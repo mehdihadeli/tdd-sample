@@ -1,6 +1,6 @@
 namespace TDDSample.Shared.Clients.Dtos;
 
-public class UsersListPage
+public class UsersListPageClientDto
 {
 	public IEnumerable<UserClientDto> Users { get; set; } = default!;
 	public int Total { get; set; }
