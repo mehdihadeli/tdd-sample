@@ -28,7 +28,7 @@ jobs:
 
         # https://samlearnsazure.blog/2021/01/05/code-coverage-in-github-with-net-core/
       - name: Run automated unit and integration tests
-        run: dotnet test  /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+        run: dotnet test  /p:CollectCoverage=true /p:CoverletOutput=TestResults /p:CoverletOutputFormat=lcov
 
       - name: Publish coverage report to coveralls.io
         uses: coverallsapp/github-action@master

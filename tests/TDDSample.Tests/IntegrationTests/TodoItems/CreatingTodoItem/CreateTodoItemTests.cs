@@ -29,6 +29,6 @@ public class CreateTodoItemTests : IClassFixture<WebApplicationFactory<ApiMetada
 
         var result = await _mediator.Send(createTodoItem);
         result.Should().NotBeNull();
-        result.As<int>().Should().BeGreaterThan(0);
+        result.Value.As<int>().Should().BeGreaterThan(0);
     }
 }
