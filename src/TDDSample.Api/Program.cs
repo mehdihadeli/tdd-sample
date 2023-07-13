@@ -1,7 +1,6 @@
 using TDDSample.Api.Extensions;
 using TDDSample.Shared;
-using TDDSample.Shared.ProblemDetail;
-using TDDSample.Shared.ProblemDetail.Middlewares.CaptureExceptionMiddleware;
+using TDDSample.Shared.Extensions.WebApplicationBuilderExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +11,7 @@ builder.Services.AddSwaggerGen();
 
 builder.AddCustomVersioning();
 
-builder.Services.AddCustomProblemDetails();
+builder.AddAppProblemDetails();
 
 builder.Services.AddTddSampleServices();
 
@@ -32,7 +31,10 @@ if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("test"))
     app.UseDeveloperExceptionPage();
 
     // https://github.com/dotnet/aspnetcore/issues/4765
-    app.UseCaptureException();
+    // https://github.com/dotnet/aspnetcore/pull/47760
+    // .net 8 will add `IExceptionHandlerFeature`in `DisplayExceptionContent` and `SetExceptionHandlerFeatures` methods `DeveloperExceptionPageMiddlewareImpl` class, exact functionality of CaptureException
+    // bet before .net 8 preview 5 we should add `IExceptionHandlerFeature` manually with our `UseCaptureException`
+    // app.UseCaptureException();
 }
 
 app.MapTddSampleEndpoints();
