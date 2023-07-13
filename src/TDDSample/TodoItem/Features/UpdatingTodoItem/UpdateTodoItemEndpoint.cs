@@ -1,3 +1,4 @@
+using Humanizer;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -10,7 +11,9 @@ internal static class UpdateTodoItemEndpoint
 {
 	internal static RouteHandlerBuilder MapUpdateTodoItemEndpoint(this IEndpointRouteBuilder routeBuilder)
 	{
-		return routeBuilder.MapPut("/{id}", Handle).WithName(nameof(UpdateTodoItem));
+		return routeBuilder.MapPut("/{id}", Handle)
+			.WithTags(nameof(Models.TodoItem).Pluralize())
+			.WithName(nameof(UpdateTodoItem));
 	}
 
 	internal static async Task<Results<NoContent, ValidationProblem, ProblemHttpResult>> Handle(

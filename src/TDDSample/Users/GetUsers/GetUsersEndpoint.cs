@@ -1,3 +1,4 @@
+using Humanizer;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -12,7 +13,9 @@ internal static class GetUsersEndpoint
 {
 	internal static RouteHandlerBuilder MapGetUsersEndpoint(this IEndpointRouteBuilder routeBuilder)
 	{
-		return routeBuilder.MapGet("/", Handle).WithName("Users");
+		return routeBuilder.MapGet("/", Handle)
+			.WithTags(nameof(Models.User).Pluralize())
+			.WithName(nameof(GetUsers).Pluralize());
 	}
 
 	internal static async Task<Results<Ok<PagedList<UserDto>>, ProblemHttpResult>> Handle(

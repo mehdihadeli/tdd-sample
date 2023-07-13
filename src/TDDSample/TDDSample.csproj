@@ -10,6 +10,7 @@
       <PackageReference Include="Asp.Versioning.Http" />
       <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" />
       <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+      <PackageReference Include="Humanizer.Core" />
       <PackageReference Include="Mediator" />
       <PackageReference Include="MediatR" />
       <PackageReference Include="Microsoft.AspNetCore.OpenApi" />

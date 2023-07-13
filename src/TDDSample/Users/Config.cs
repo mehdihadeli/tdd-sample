@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Humanizer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -20,7 +21,7 @@ public static class Config
     public static IEndpointRouteBuilder MapUsersEndpoints(this IEndpointRouteBuilder routeBuilder)
     {
         var todoItems = routeBuilder
-            .NewVersionedApi("Users")
+            .NewVersionedApi(nameof(Models.User).Pluralize())
             .AddEndpointFilter(
                 async (efiContext, next) =>
                 {

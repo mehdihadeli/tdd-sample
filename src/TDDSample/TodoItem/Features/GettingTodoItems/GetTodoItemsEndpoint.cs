@@ -1,3 +1,4 @@
+using Humanizer;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +12,9 @@ public static class GetTodoItemsEndpoint
 {
     internal static RouteHandlerBuilder MapGetTodoItemsEndpoint(this IEndpointRouteBuilder routeBuilder)
     {
-        return routeBuilder.MapGet("/", Handle).WithName(nameof(GetTodoItems));
+        return routeBuilder.MapGet("/", Handle)
+            .WithTags(nameof(Models.TodoItem).Pluralize())
+            .WithName(nameof(GetTodoItems));
     }
 
     internal static async Task<Results<Ok<PagedList<TodoItemDto>>, ValidationProblem>> Handle(
