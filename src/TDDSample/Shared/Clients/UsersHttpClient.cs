@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using AutoMapper;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Options;
 using TDDSample.Shared.Clients.Dtos;
 using TDDSample.Shared.Extensions;
@@ -30,9 +31,16 @@ public class UsersHttpClient : IUsersHttpClient
         CancellationToken cancellationToken = default
     )
     {
+        // https://stackoverflow.com/a/67877742/581476
+        var qb = new QueryBuilder
+                 {
+                     { "limit", pageRequest.PageSize.ToString() },
+                     { "skip", pageRequest.Page.ToString() },
+                 };
+
         // https://github.com/App-vNext/Polly#handing-return-values-and-policytresult
         var httpResponse = await _httpClient.GetAsync(
-            $"{_userHttpClientOptions.UsersEndpoint}?limit={pageRequest.PageSize}&skip={pageRequest.Page}",
+            $"{_userHttpClientOptions.UsersEndpoint}?{qb.ToQueryString().Value}",
             cancellationToken
         );
 
