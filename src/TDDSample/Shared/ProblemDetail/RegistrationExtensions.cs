@@ -14,7 +14,7 @@ public static class RegistrationExtensions
         params Assembly[] scanAssemblies
     )
     {
-        var assemblies = scanAssemblies.Any() ? scanAssemblies : new[] { Assembly.GetCallingAssembly() };
+        var assemblies = scanAssemblies.Any() ? scanAssemblies : AppDomain.CurrentDomain.GetAssemblies();
 
         services.AddProblemDetails(configure);
         services.AddSingleton<IProblemDetailsService, ProblemDetailsService>();
