@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TDDSample.Shared.ProblemDetail;
 
+
 // https://www.strathweb.com/2022/08/problem-details-responses-everywhere-with-asp-net-core-and-net-7/
 public class ProblemDetailsService : IProblemDetailsService
 {
@@ -25,26 +26,14 @@ public class ProblemDetailsService : IProblemDetailsService
         ArgumentNullException.ThrowIfNull((object)context.ProblemDetails, "context.ProblemDetails");
         ArgumentNullException.ThrowIfNull((object)context.HttpContext, "context.HttpContext");
 
-        // with help of `capture exception middleware` for capturing actual thrown exception
-        var exceptionFeature = context.HttpContext.Features.Get<IExceptionHandlerFeature>();
-        if (exceptionFeature is null)
-        {
-            throw new Exception(
-                "Please register `CaptureExceptionMiddleware` after `DeveloperExceptionPageMiddleware` in the middlewares list."
-            );
-        }
+        // with help of `capture exception middleware` for capturing actual thrown exception, in .net 8 preview 5 it will create automatically
+        IExceptionHandlerFeature? exceptionFeature =
+            context.HttpContext.Features.Get<IExceptionHandlerFeature>();
 
-        if (_problemDetailMappers is { })
+        // if we throw an exception, we should create appropriate ProblemDetail based on the exception, else we just return default ProblemDetail with status 500 or a custom ProblemDetail which is returned from the endpoint
+        if (exceptionFeature is not null)
         {
-            foreach (var problemDetailMapper in _problemDetailMappers)
-            {
-                var mappedStatusCode = problemDetailMapper.GetMappedStatusCodes(exceptionFeature.Error);
-                if (mappedStatusCode > 0)
-                {
-                    PopulateNewProblemDetail(context.ProblemDetails, mappedStatusCode, exceptionFeature.Error);
-                    context.HttpContext.Response.StatusCode = mappedStatusCode;
-                }
-            }
+            CreateProblemDetailFromException(context, exceptionFeature);
         }
 
         if (
@@ -73,8 +62,35 @@ public class ProblemDetailsService : IProblemDetailsService
         return problemDetailsWriter?.WriteAsync(context) ?? ValueTask.CompletedTask;
     }
 
+    private void CreateProblemDetailFromException(
+        ProblemDetailsContext context,
+        IExceptionHandlerFeature exceptionFeature
+    )
+    {
+        if (_problemDetailMappers is { })
+        {
+            foreach (var problemDetailMapper in _problemDetailMappers)
+            {
+                var mappedStatusCode = problemDetailMapper.GetMappedStatusCodes(
+                    exceptionFeature.Error
+                );
+                if (mappedStatusCode > 0)
+                {
+                    PopulateNewProblemDetail(
+                        context.ProblemDetails,
+                        context.HttpContext,
+                        mappedStatusCode,
+                        exceptionFeature.Error
+                    );
+                    context.HttpContext.Response.StatusCode = mappedStatusCode;
+                }
+            }
+        }
+    }
+
     private static void PopulateNewProblemDetail(
         ProblemDetails existingProblemDetails,
+        HttpContext httpContext,
         int statusCode,
         Exception exception
     )
@@ -82,5 +98,8 @@ public class ProblemDetailsService : IProblemDetailsService
         existingProblemDetails.Title = exception.GetType().Name;
         existingProblemDetails.Detail = exception.Message;
         existingProblemDetails.Status = statusCode;
+        existingProblemDetails.Instance =
+            $"{httpContext.Request.Method} {httpContext.Request.Path}";
     }
 }
+
