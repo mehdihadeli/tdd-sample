@@ -3,7 +3,7 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/mehdihadeli/tdd-sample/ci.yml?style=flat-square)](https://github.com/mehdihadeli/tdd-sample/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/mehdihadeli/tdd-sample/badge.svg?style=flat-square)](https://coveralls.io/github/mehdihadeli/tdd-sample?branch=master)
 
-This repository contains a sample project demonstrating `Test-Driven Development (TDD)` using .Net 7 and `Vertical Slice Architecture` based on `Minimal APIs` in .NET Core. The project aims to showcase best practices for building maintainable and testable software.
+This repository contains a sample project demonstrating `Test-Driven Development (TDD)` using .Net 8 and `Vertical Slice Architecture` based on `Minimal APIs` in .NET Core. The project aims to showcase best practices for building maintainable and testable software.
 
 Beside of creating some unit tests for achieving test driven development (TDD), we also covered integration and end-to-end testing here.
 
@@ -27,7 +27,7 @@ You then repeat this development cycle until the software is complete. One of th
 
 1. This application uses `Https` for hosting apis, to setup a valid certificate on your machine, you can create a [Self-Signed Certificate](https://learn.microsoft.com/en-us/aspnet/core/security/docker-https?view=aspnetcore-7.0#macos-or-linux), see more about enforce certificate [here](https://learn.microsoft.com/en-us/aspnet/core/security/enforcing-ssl).
 2. Install git - [https://git-scm.com/downloads](https://git-scm.com/downloads).
-3. Install .NET Core 7.0 - [https://dotnet.microsoft.com/download/dotnet/7.0](https://dotnet.microsoft.com/download/dotnet/7.0).
+3. Install .NET Core 8.0 - [https://dotnet.microsoft.com/download/dotnet/8.0](https://dotnet.microsoft.com/download/dotnet/8.0).
 4. Install Visual Studio, Rider or VSCode.
 5. Open [tdd-sample.sln](./tdd-sample.sln) solution, make sure that's compiling.
 6. Navigate to `src/TDDSample.Api` and run `dotnet run` to launch the api (ASP.NET Core Web API)
