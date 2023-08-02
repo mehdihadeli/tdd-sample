@@ -1,7 +1,7 @@
 # TDDSample
 
-[![CI](https://img.shields.io/github/actions/workflow/status/mehdihadeli/tdd-sample/ci.yml?style=flat-square)](https://github.com/mehdihadeli/tdd-sample/actions/workflows/ci.yml)
-[![Coverage Status](https://coveralls.io/repos/github/mehdihadeli/tdd-sample/badge.svg?style=flat-square)](https://coveralls.io/github/mehdihadeli/tdd-sample?branch=master)
+[![CI](https://img.shields.io/github/actions/workflow/status/mehdihadeli/tdd-sample/ci.yml?label=Build%20Pipeline%20&logo=github&style=for-the-badge)](https://github.com/mehdihadeli/tdd-sample/actions/workflows/ci.yml)
+[![Coverage Status](https://coveralls.io/repos/github/mehdihadeli/tdd-sample/badge.svg?label=Code%20Coverage&logo=codecov&logoColor=white&style=for-the-badge)](https://coveralls.io/github/mehdihadeli/tdd-sample?branch=master)
 
 This repository contains a sample project demonstrating `Test-Driven Development (TDD)` using .Net 8 and `Vertical Slice Architecture` based on `Minimal APIs` in .NET Core. The project aims to showcase best practices for building maintainable and testable software.
 
