@@ -31,8 +31,8 @@ public class CreateTodoItemHandlerTests
 
         todoItemRepository
             .AddAsync(
-                Arg.Is<TodoItem.Models.TodoItem>(
-                    t => t.Title == request.Title && t.IsCompleted == request.IsCompleted && t.UserId == request.UserId
+                Arg.Is<TodoItem.Models.TodoItem>(t =>
+                    t.Title == request.Title && t.IsCompleted == request.IsCompleted && t.UserId == request.UserId
                 ),
                 cancellationToken
             )
@@ -67,8 +67,8 @@ public class CreateTodoItemHandlerTests
 
         todoItemRepository
             .AddAsync(
-                Arg.Is<TodoItem.Models.TodoItem>(
-                    t => t.Title == request.Title && t.IsCompleted == request.IsCompleted && t.UserId == request.UserId
+                Arg.Is<TodoItem.Models.TodoItem>(t =>
+                    t.Title == request.Title && t.IsCompleted == request.IsCompleted && t.UserId == request.UserId
                 ),
                 cancellationToken
             )
@@ -81,8 +81,8 @@ public class CreateTodoItemHandlerTests
         await todoItemRepository
             .Received(1)
             .AddAsync(
-                Arg.Is<TodoItem.Models.TodoItem>(
-                    t => t.Title == request.Title && t.IsCompleted == request.IsCompleted && t.UserId == request.UserId
+                Arg.Is<TodoItem.Models.TodoItem>(t =>
+                    t.Title == request.Title && t.IsCompleted == request.IsCompleted && t.UserId == request.UserId
                 ),
                 cancellationToken
             );

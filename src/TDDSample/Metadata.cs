@@ -1,6 +1,3 @@
 namespace TDDSample;
 
-public class Metadata
-{
-	
-}
+public class Metadata { }

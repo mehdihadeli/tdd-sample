@@ -12,7 +12,8 @@ public static class GetTodoItemsEndpoint
 {
     internal static RouteHandlerBuilder MapGetTodoItemsEndpoint(this IEndpointRouteBuilder routeBuilder)
     {
-        return routeBuilder.MapGet("/", Handle)
+        return routeBuilder
+            .MapGet("/", Handle)
             .WithTags(nameof(Models.TodoItem).Pluralize())
             .WithName(nameof(GetTodoItems));
     }
@@ -26,17 +27,18 @@ public static class GetTodoItemsEndpoint
 
         var result = await mediator.Send(query, cancellationToken);
 
-       return result.Match<Results<Ok<PagedList<TodoItemDto>>, ValidationProblem>>(
+        return result.Match<Results<Ok<PagedList<TodoItemDto>>, ValidationProblem>>(
             todoItemList => TypedResults.Ok(todoItemList),
             badRequestException =>
             {
                 var errors = new Dictionary<string, string[]>
-                             {
-                                 {"validation errors", badRequestException.ErrorMessages.ToArray()},
-                             };
+                {
+                    { "validation errors", badRequestException.ErrorMessages.ToArray() },
+                };
 
                 return TypedResults.ValidationProblem(detail: badRequestException.Message, errors: errors);
-            });
+            }
+        );
     }
 
     internal record GetTodoItemsRequestParameter(

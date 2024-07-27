@@ -29,9 +29,13 @@ internal class GetTodoItemsHandler : IRequestHandler<GetTodoItems, OneOf<PagedLi
 
         var pageResult = await _todoItemRepository.GetByPageAsync(request.PageRequest, cancellationToken);
 
-        var pageListDto = pageResult.To<TodoItemDto>(
-            ti => new TodoItemDto(ti.Id, ti.Title, ti.IsCompleted, ti.UserId, ti.CreatedOn)
-        );
+        var pageListDto = pageResult.To<TodoItemDto>(ti => new TodoItemDto(
+            ti.Id,
+            ti.Title,
+            ti.IsCompleted,
+            ti.UserId,
+            ti.CreatedOn
+        ));
 
         return pageListDto;
     }

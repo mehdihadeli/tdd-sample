@@ -13,8 +13,8 @@ public static partial class ServiceCollectionExtensions
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddMediatR(x => x.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
-        services.AddDbContextFactory<TodoDbContext>(
-            options => options.UseInMemoryDatabase($"MinimalApiDb-{Guid.NewGuid()}")
+        services.AddDbContextFactory<TodoDbContext>(options =>
+            options.UseInMemoryDatabase($"MinimalApiDb-{Guid.NewGuid()}")
         );
 
         services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));

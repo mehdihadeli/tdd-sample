@@ -35,19 +35,18 @@ public class UpdateTodoItemHandlerTests : IClassFixture<MappingFixture>
 
         todoItemRepository
             .UpdateAsync(
-                Arg.Is<TodoItem.Models.TodoItem>(
-                    t =>
-                        t.Id == request.Id
-                        && t.Title == request.Title
-                        && t.IsCompleted == request.IsCompleted
-                        && t.UserId == request.UserId
+                Arg.Is<TodoItem.Models.TodoItem>(t =>
+                    t.Id == request.Id
+                    && t.Title == request.Title
+                    && t.IsCompleted == request.IsCompleted
+                    && t.UserId == request.UserId
                 ),
                 cancellationToken
             )
             .Returns(Task.CompletedTask);
 
         // Act
-       var result = await handler.Handle(request, cancellationToken);
+        var result = await handler.Handle(request, cancellationToken);
 
         // Assert
         result.Value.As<None>().Should().NotBeNull();
@@ -73,12 +72,11 @@ public class UpdateTodoItemHandlerTests : IClassFixture<MappingFixture>
 
         todoItemRepository
             .UpdateAsync(
-                Arg.Is<TodoItem.Models.TodoItem>(
-                    t =>
-                        t.Id == request.Id
-                        && t.Title == request.Title
-                        && t.IsCompleted == request.IsCompleted
-                        && t.UserId == request.UserId
+                Arg.Is<TodoItem.Models.TodoItem>(t =>
+                    t.Id == request.Id
+                    && t.Title == request.Title
+                    && t.IsCompleted == request.IsCompleted
+                    && t.UserId == request.UserId
                 ),
                 cancellationToken
             )
@@ -93,12 +91,11 @@ public class UpdateTodoItemHandlerTests : IClassFixture<MappingFixture>
         await todoItemRepository
             .Received(1)
             .UpdateAsync(
-                Arg.Is<TodoItem.Models.TodoItem>(
-                    t =>
-                        t.Id == request.Id
-                        && t.Title == request.Title
-                        && t.IsCompleted == request.IsCompleted
-                        && t.UserId == request.UserId
+                Arg.Is<TodoItem.Models.TodoItem>(t =>
+                    t.Id == request.Id
+                    && t.Title == request.Title
+                    && t.IsCompleted == request.IsCompleted
+                    && t.UserId == request.UserId
                 ),
                 cancellationToken
             );
@@ -121,12 +118,11 @@ public class UpdateTodoItemHandlerTests : IClassFixture<MappingFixture>
 
         todoItemRepository
             .UpdateAsync(
-                Arg.Is<TodoItem.Models.TodoItem>(
-                    t =>
-                        t.Id == request.Id
-                        && t.Title == request.Title
-                        && t.IsCompleted == request.IsCompleted
-                        && t.UserId == request.UserId
+                Arg.Is<TodoItem.Models.TodoItem>(t =>
+                    t.Id == request.Id
+                    && t.Title == request.Title
+                    && t.IsCompleted == request.IsCompleted
+                    && t.UserId == request.UserId
                 ),
                 cancellationToken
             )
