@@ -24,9 +24,8 @@ public class UpdateTodoItemEndpointTests
 
         mediator
             .Send(
-                Arg.Is<UpdateTodoItem>(
-                    command =>
-                        command.Id == todoItemId && command.Title == request.Title && command.UserId == request.UserId
+                Arg.Is<UpdateTodoItem>(command =>
+                    command.Id == todoItemId && command.Title == request.Title && command.UserId == request.UserId
                 ),
                 Arg.Any<CancellationToken>()
             )
@@ -58,9 +57,8 @@ public class UpdateTodoItemEndpointTests
 
         mediator
             .Send(
-                Arg.Is<UpdateTodoItem>(
-                    command =>
-                        command.Id == todoItemId && command.Title == request.Title && command.UserId == request.UserId
+                Arg.Is<UpdateTodoItem>(command =>
+                    command.Id == todoItemId && command.Title == request.Title && command.UserId == request.UserId
                 ),
                 Arg.Any<CancellationToken>()
             )
@@ -93,9 +91,8 @@ public class UpdateTodoItemEndpointTests
 
         mediator
             .Send(
-                Arg.Is<UpdateTodoItem>(
-                    command =>
-                        command.Id == todoItemId && command.Title == request.Title && command.UserId == request.UserId
+                Arg.Is<UpdateTodoItem>(command =>
+                    command.Id == todoItemId && command.Title == request.Title && command.UserId == request.UserId
                 ),
                 Arg.Any<CancellationToken>()
             )
@@ -115,9 +112,8 @@ public class UpdateTodoItemEndpointTests
         await mediator
             .Received(1)
             .Send(
-                Arg.Is<UpdateTodoItem>(
-                    command =>
-                        command.Id == todoItemId && command.Title == request.Title && command.UserId == request.UserId
+                Arg.Is<UpdateTodoItem>(command =>
+                    command.Id == todoItemId && command.Title == request.Title && command.UserId == request.UserId
                 ),
                 Arg.Any<CancellationToken>()
             );

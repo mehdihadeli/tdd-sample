@@ -33,10 +33,10 @@ public class UsersHttpClient : IUsersHttpClient
     {
         // https://stackoverflow.com/a/67877742/581476
         var qb = new QueryBuilder
-                 {
-                     { "limit", pageRequest.PageSize.ToString() },
-                     { "skip", pageRequest.Page.ToString() },
-                 };
+        {
+            { "limit", pageRequest.PageSize.ToString() },
+            { "skip", pageRequest.Page.ToString() },
+        };
 
         // https://github.com/App-vNext/Polly#handing-return-values-and-policytresult
         var httpResponse = await _httpClient.GetAsync(

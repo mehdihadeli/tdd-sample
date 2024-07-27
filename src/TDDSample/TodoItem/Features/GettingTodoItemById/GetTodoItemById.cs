@@ -7,9 +7,10 @@ using TDDSample.TodoItem.Dtos;
 
 namespace TDDSample.TodoItem.Features.GettingTodoItemById;
 
-public record GetTodoItemById(int Id) : IRequest<OneOf<TodoItemDto, BadRequestException,NotFoundException>>;
+public record GetTodoItemById(int Id) : IRequest<OneOf<TodoItemDto, BadRequestException, NotFoundException>>;
 
-public class GetTodoItemByIdHandler : IRequestHandler<GetTodoItemById, OneOf<TodoItemDto, BadRequestException,NotFoundException>>
+public class GetTodoItemByIdHandler
+    : IRequestHandler<GetTodoItemById, OneOf<TodoItemDto, BadRequestException, NotFoundException>>
 {
     private readonly IRepository<Models.TodoItem> _todoItemRepository;
     private readonly IMapper _mapper;
@@ -20,7 +21,10 @@ public class GetTodoItemByIdHandler : IRequestHandler<GetTodoItemById, OneOf<Tod
         _mapper = mapper;
     }
 
-    public async Task<OneOf<TodoItemDto, BadRequestException,NotFoundException>> Handle(GetTodoItemById? request, CancellationToken cancellationToken)
+    public async Task<OneOf<TodoItemDto, BadRequestException, NotFoundException>> Handle(
+        GetTodoItemById? request,
+        CancellationToken cancellationToken
+    )
     {
         if (request is null)
             return new BadRequestException($"{nameof(request)} is required.");

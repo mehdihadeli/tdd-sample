@@ -28,11 +28,11 @@ public class GetTodoItemsEndpointTests
         );
         var todoItemsDto = new AutoFaker<TodoItemDto>().Generate(20);
         var pageResult = new PagedList<TodoItemDto>
-                         {
-                             PageSize = pageSize,
-                             PageNumber = page,
-                             Results = todoItemsDto
-                         };
+        {
+            PageSize = pageSize,
+            PageNumber = page,
+            Results = todoItemsDto
+        };
 
         mediator
             .Send(
@@ -64,13 +64,12 @@ public class GetTodoItemsEndpointTests
             pageSize
         );
         var todoItemsDto = new AutoFaker<TodoItemDto>().Generate(20);
-        var pageResult =
-            new PagedList<TodoItemDto>
-            {
-                PageSize = pageSize,
-                PageNumber = page,
-                Results = todoItemsDto
-            };
+        var pageResult = new PagedList<TodoItemDto>
+        {
+            PageSize = pageSize,
+            PageNumber = page,
+            Results = todoItemsDto
+        };
 
         mediator
             .Send(
@@ -103,13 +102,12 @@ public class GetTodoItemsEndpointTests
             pageSize
         );
         var todoItemsDto = new AutoFaker<TodoItemDto>().Generate(20);
-        var pageResult =
-            new PagedList<TodoItemDto>
-            {
-                PageSize = pageSize,
-                PageNumber = page,
-                Results = todoItemsDto
-            };
+        var pageResult = new PagedList<TodoItemDto>
+        {
+            PageSize = pageSize,
+            PageNumber = page,
+            Results = todoItemsDto
+        };
 
         mediator
             .Send(
